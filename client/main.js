@@ -27,6 +27,31 @@ Template.myGallery.events({
 		$("#"+this._id).fadeOut('slow', function(){
 			imagesdb.remove({_id:myId});
 		});
-		
+	}
+});
+
+ Template.addImage.events({
+	'click .js-addImage' (event,instance){
+		console.log("adding Image...");
+	},
+	'click .js-exitAdd' (event,instance){
+		console.log("closing...");
+	},
+
+		'click .js-saveImage ' (event,instance){
+			var theTitle = $("#imgTitle").val();
+			var thePath = $("#imgPath").val();
+			var TheDesc = $("#imgDesc").val();
+		//console.log("Saving Image with title: "+theTitle+" and its path is "+thePath+" and its description "+TheDesc);
+		 imagesdb.insert({
+	 	"title" : theTitle,
+	 	"path" : thePath,
+			"desc" : TheDesc
+	 });
+		 console.log ("saving...");
+		 $("addImageModal").modal("hide");
+		 $("#imgTitle").val("");
+		 $("#imgPath").val("");
+		 $("#imgDesc").val("");
 	}
 });
