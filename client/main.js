@@ -27,6 +27,18 @@ Template.myGallery.events({
 		$("#"+this._id).fadeOut('slow', function(){
 			imagesdb.remove({_id:myId});
 		});
+	},
+	'click .js-edit' (event){
+		 $("#editModal").modal("show");
+		 var myId = this._id;
+		 console.log( "let's edit "+myId);
+		 var eTitle = imagesdb.findOne({_id:myId}).title;
+		 var ePath= imagesdb.findOne({_id:myId}).path;
+		 var eDesc = imagesdb.findOne({_id:myId}).Desc;
+
+		 $("#editTitle").val(eTitle);
+		 $("#editPath").val(ePath);
+		 $("#editDesc").val(eDesc);
 	}
 });
 
@@ -53,5 +65,24 @@ Template.myGallery.events({
 		 $("#imgTitle").val("");
 		 $("#imgPath").val("");
 		 $("#imgDesc").val("");
-	}
+	},
+ 
 });
+
+ Template.editModal.events({
+ 	'click .js UpdateImage' (event,instance){
+ 		var newTitle = $("#editTitle").val();
+ 		var theTitle = $("#imgTitle").val();
+		var thePath = $("#imgPath").val();
+		var TheDesc = $("#imgDesc").val();
+		console.log("updating "+updateId+" title"+newTitle+"path"+newPath+"Description"+newDesc);
+		imagesdb.update({_id: updateId},
+	{$set:{
+				"title": newTitle,
+				"path": newPath,
+				"desc": newDesc
+			}}
+
+ 	);
+	}
+ });
